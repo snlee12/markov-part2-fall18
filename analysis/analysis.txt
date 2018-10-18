@@ -3,6 +3,9 @@ This is the analysis for Markov Part 2, Fall 2018
 Include your name and net id here. Answer the questions from the assignment 
 that are reproduced below
 
+Siyun Lee
+ssl36
+
 (1) Determine (from running Benchmark.java) how long it takes for 
 BaseMarkov to generate 2,000, 4,000, 8,000, 16,000, and 32,000 
 random characters using the default file and an order 5 Markov Model. 
@@ -10,6 +13,34 @@ Include these timings in your report.
 The program also generates 4,096 characters using texts that increase in 
 size from 496,768 characters to 4,967,680 characters (10 times the number).  
 Do you the timings support the O(NT) analysis for BaseMarkov?
+
+
+The default file in my Benchmark code seemed to be an order 5 Model, which is shown below.
+
+Results from running Benchmark.java
+_________________________________
+characters	| time		|
+100		| 0.012		|
+200		| 0.033		|
+400		| 0.055		|
+800		| 0.098		|
+1600		| 0.191		|
+3200		| 0.376		|
+6400		| 0.757		|
+12800		| 1.534		|
+
+From these values, we can estimate the times for BaseMarkov to generate 2,000, 4,000, 
+8,000, 16,000, 32,000 by multiplying the times for the number of characters that are 
+lower by a factor of 10 by 10. Thus, we get 0.033 * 10 = 0.33 for 2,000 characters,
+0.055 * 10 = 0.55 for 4,000 characters, 0.098 * 10 = 0.98 for 8,000 characters,
+0.191 * 10 = 1.91 for 16,000 characters, and 0.376 * 10 = 3.76 for 32,000 characters.
+
+The results from running Benchmark.java show that the runtime complexity of the BaseMarkov
+code is indeed O(NT). When the number of characters source text is kept constant, the time
+increased in proportion to the number of characters generated. When the number of characters
+generated was help constant, the time increased in proportion to the number of characters in
+the source text. This shows that the runtime complexity is proportional to both N and T, when
+the other is help constant, suggesting that the overall runtime complexity is indeed O(NT).
 
 
 
@@ -21,7 +52,41 @@ The program also generates 4,096 characters using texts that increase in
 size from 496,768 characters to 4,967,680 characters (10 times the number).  
 Do you the timings support the O(N+T) analysis for EfficientMarkov?
 
+
+The default file in my Benchmark code seemed to be an order 5 Model, which is shown below.
+Results from running Benchmark.java
+_________________________________
+characters	| time		|
+100		| 0.129		|
+200		| 0.136		|
+400		| 0.136		|
+800		| 0.136		|
+1600		| 0.137		|
+3200		| 0.115		|
+6400		| 0.121		|
+12800		| 0.106		|
+
+From these values, we can see that the time remains essentially constant despite the number
+of characters generated changing. In order to get estimates for the time to generate 2,000, 
+4,000, 8,000, 16,000, and 32,000 random characters, we can simply multiple  the average of
+the time it took for 200, 400, 800, 1,600, and 3,200 characters by 10. Doing this, we get
+(0.136 + 0.136 + 0.136 + 0.137 + 0.115) / 5 * 10 = 1.32. We can estimate the time 
+that generating 2,000, 4,000, 8,000, 16,000, and 32,000 random characters will take to be 
+about 1.32.
+
+The results from Benchmark.java show that the number of characters have very little impact
+on the overall runtime complexity of the program, when the text is left constant. However,
+when we look at the times for increasing the length of text while leaving the number of 
+characters generated constant, we see that the runtime complexity was proportional to the
+length of the text, which suggests that this model is definitely linear. While the runtime
+complexity seems to be O(N+T), the effect of increasing N seems to be a lot greater.
+
+
 (3)The tests in the class Benchmark use an order-5 Markov Model. 
 Run tests that you think are appropriate to determine if the order of the 
 Markov Model has a significant impact on the running time for BaseMarkov. 
 Explain your reasoning.
+
+No, when different orders (2, 3, 5, 7, and 10) were tested, there seemed to be no trend.
+While the values different slightly amongst each other, the general trend was the same, 
+and it eventually seemed to not have a significant impact on the run-time for BaseMarkov.

@@ -9,10 +9,10 @@ import java.util.*;
 
 
 public class Benchmark {
-	
+
 	private static final int TRIALS = 5; // number of trials for each run
 
-	
+
 	/**
 	 * Returns the MarkovModel object used to benchmark, e.g., BruteMarkov
 	 * or EfficientMarkov. Isolates dependency on the model to this single method.
@@ -23,7 +23,7 @@ public class Benchmark {
 		return new BaseMarkov(order);
 		//return new EfficientMarkov(order);
 	}
-	
+
 	/**
 	 * Runs model based on parameters passed, returns mean and standard deviation
 	 * in an array of two double values with mean in ret[0] and sigma in ret[1]
@@ -35,10 +35,10 @@ public class Benchmark {
 	 */
 	private static double[] benchmark(MarkovInterface<?> model,
 			                          String source, int size) throws Exception {
-		
+
 		double[] times = new double[TRIALS];
 
-		for (int i = 0; i < TRIALS; i++) {			
+		for (int i = 0; i < TRIALS; i++) {
 			double start = System.nanoTime();
 			model.setTraining(source);
 			Thread thread = new Thread(() -> {
@@ -48,22 +48,22 @@ public class Benchmark {
 			thread.join();
 			times[i] = (System.nanoTime() - start) / 1.0e9;
 		}
-		
+
 		double mean = 0;
 		for (int i = 0; i < TRIALS; i++) {
 			mean += times[i];
 		}
 		mean /= TRIALS;
-		
+
 		double stddev = 0;
 		for (int i = 0; i < TRIALS; i++) {
 			stddev += Math.pow(times[i] - mean, 2);
 		}
 		stddev /= TRIALS - 1;
-		
+
 		return new double[] {mean, stddev};
 	}
-	
+
 	/**
 	 * Returns number of unique k-grams in a text.
 	 * @param text is characters being analyzed
@@ -78,24 +78,24 @@ public class Benchmark {
 		}
 		return set.size();
 	}
-	
-	
+
+
 	public static void main(String[] args) throws Exception {
 		System.out.println("Starting tests\n");
-		
+
 		String fileName = "hawthorne.txt";
-		File file = new File("data/"+fileName);
+		File file = new File("../data/"+fileName);
 		double[] data;
 		String source = TextSource.textFromFile(file);
 		int[] sizes = {100,200,400,800,1600,3200,6400,12800};
-		int order = 5;
-		MarkovInterface<String> model = new BaseMarkov(order);
-		
+		int order = 7;
+		MarkovInterface<String> model = getMarkov(order);
+
 		// call benchmark and ignore value, first trial generates bogus data
 		data = benchmark(model,source,1000);
-		
+
 		// benchmark keeping N fixed, varying T: #random chars generated
-		
+
 		System.out.printf("time\tsource\t#chars\n");
 		for(int size : sizes) {
 			model.resetRandom();
@@ -103,19 +103,19 @@ public class Benchmark {
 			System.out.printf("%1.3f\t%d\t%d\n", data[0],source.length(),size);
 		}
 		System.out.println();
-		
+
 		// benchmark keeping T constant, varying N (size of training)
-		
+
 		String text = source;
 		String textForTrial = text;
-		int tSize = 10;
+		int tSize = 2;
 		int tLength = 4096;
 		for(int k=0; k < tSize; k += 1) {
 			data = benchmark(model,textForTrial,tLength);
 			System.out.printf("%1.3f\t%d\t%d\n", data[0],textForTrial.length(),tLength);
 			textForTrial += text;
 		}
-	
+
 		System.out.println();
 		System.out.println("Finished tests");
 	}

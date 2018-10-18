@@ -12,7 +12,8 @@ public class EfficientWordMarkov extends BaseWordMarkov{
     this(2);
   }
 
-
+// puts various Strings in the ArrayList<String> using WordGrams
+// that were generated from text as a key
   @Override
   public void setTraining(String text) {
     myMap.clear();
@@ -33,7 +34,7 @@ public class EfficientWordMarkov extends BaseWordMarkov{
     }
   }
 
-
+// returns the ArrayList that is associated with the given WordGram key
   @Override
   public ArrayList<String> getFollows(WordGram key) {
     if (!myMap.containsKey(key)) {
