@@ -88,7 +88,7 @@ public class Benchmark {
 		double[] data;
 		String source = TextSource.textFromFile(file);
 		int[] sizes = {100,200,400,800,1600,3200,6400,12800};
-		int order = 7;
+		int order = 1;
 		MarkovInterface<String> model = getMarkov(order);
 
 		// call benchmark and ignore value, first trial generates bogus data
@@ -108,7 +108,7 @@ public class Benchmark {
 
 		String text = source;
 		String textForTrial = text;
-		int tSize = 2;
+		int tSize = 10;
 		int tLength = 4096;
 		for(int k=0; k < tSize; k += 1) {
 			data = benchmark(model,textForTrial,tLength);

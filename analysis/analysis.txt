@@ -87,6 +87,9 @@ Run tests that you think are appropriate to determine if the order of the
 Markov Model has a significant impact on the running time for BaseMarkov. 
 Explain your reasoning.
 
-No, when different orders (2, 3, 5, 7, and 10) were tested, there seemed to be no trend.
-While the values different slightly amongst each other, the general trend was the same, 
-and it eventually seemed to not have a significant impact on the run-time for BaseMarkov.
+Yes, when different orders (1, 2, 3, 5, 7, 10, and 100) were tested, the smaller values
+seemed to have a higher run tim compared to higher values. One thing that I did notice
+was that the order-1 Markov took significantly longer than any other one; however, most 
+of the differences between orders were not so dramatic. This is probably because order-1
+requires the code to run the for loop much more than any other order. As a result, it 
+takes much longer, because for each time the for loop is run, the run time increases.
