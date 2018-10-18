@@ -2,7 +2,7 @@ import java.util.*;
 
 public class EfficientMarkov extends BaseMarkov {
 
-  protected Map<String, ArrayList<String>> myMap;
+  private Map<String, ArrayList<String>> myMap;
 
   public EfficientMarkov(int order) {
     super(order);
@@ -32,7 +32,6 @@ public class EfficientMarkov extends BaseMarkov {
       else {
         listy.add(PSEUDO_EOS);
       }
-
     }
   }
 

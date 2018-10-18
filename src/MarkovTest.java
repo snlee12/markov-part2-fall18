@@ -9,9 +9,10 @@ public class MarkovTest {
 
 	private MarkovInterface<String> getModel(int order) {
 		// TODO: change to EfficientMarkov
-		return new BaseMarkov(order);
+		return new EfficientMarkov(order);
+		//return new BaseMarkov(order);
 	}
-	
+
 
 	/**
 	 * This test checks if MarkovModel makes a correct " Ngram using a simple
@@ -32,19 +33,19 @@ public class MarkovTest {
 		assertFalse("This test checks if MarkovModel makes a correct " +
 					"Ngram using a simple source",
 					output.contains("bbb"));
-		assertFalse("This test checks if MarkovModel makes a correct " + 
+		assertFalse("This test checks if MarkovModel makes a correct " +
 					"Ngram using a simple source",
 					output.contains("aba"));
-		assertFalse("This test checks if MarkovModel makes a correct " + 
+		assertFalse("This test checks if MarkovModel makes a correct " +
 					"Ngram using a simple source",
 					output.contains("bab"));
-		assertTrue("This test checks if MarkovModel makes a correct " + 
+		assertTrue("This test checks if MarkovModel makes a correct " +
 				   "Ngram using a simple source",
 				   output.contains("aab"));
-		assertTrue("This test checks if MarkovModel makes a correct " + 
+		assertTrue("This test checks if MarkovModel makes a correct " +
 				   "Ngram using a simple source",
 				   output.contains("baa"));
-		assertTrue("This test checks if MarkovModel makes a correct " + 
+		assertTrue("This test checks if MarkovModel makes a correct " +
 				   "Ngram using a simple source",
 				   output.contains("abb"));
 		assertTrue("This test checks if MarkovModel makes a correct " + "Ngram using a simple source",
@@ -65,7 +66,7 @@ public class MarkovTest {
 		while (output.length() < 8) {
 			output = markov.getRandomText(testString.length());
 		}
-		assertEquals("This test checks if MarkovModel makes a correct " + 
+		assertEquals("This test checks if MarkovModel makes a correct " +
 					 "Ngram when the source contains only one distinct letter",
 					 output, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".substring(0, output.length()));
 	}
@@ -81,7 +82,7 @@ public class MarkovTest {
 		markov.setTraining(testString);
 		String output = markov.getRandomText(100);
 		assertTrue(
-				"This test checks if MarkovModel makes a correct " + 
+				"This test checks if MarkovModel makes a correct " +
 				"Ngram when the source contains no repeat letters",
 				testString.contains(output));
 	}
