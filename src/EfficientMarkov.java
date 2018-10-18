@@ -21,16 +21,15 @@ public class EfficientMarkov extends BaseMarkov {
 
     for (int i = 0; i < myText.length() - myOrder + 1; i += 1) {
       String tempText = myText.substring(i, i + myOrder);
-      ArrayList<String> listy = new ArrayList<String>();
 
       if (!myMap.containsKey(tempText)) {
-        myMap.put(tempText, listy);
+        myMap.put(tempText, new ArrayList<String>());
       }
       if (i + myOrder < myText.length()) {
-        listy.add(Character.toString(myText.charAt(i + myOrder)));
+        myMap.get(tempText).add(Character.toString(myText.charAt(i + myOrder)));
       }
       else {
-        listy.add(PSEUDO_EOS);
+        myMap.get(tempText).add(PSEUDO_EOS);
       }
     }
   }

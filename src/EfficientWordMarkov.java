@@ -20,16 +20,15 @@ public class EfficientWordMarkov extends BaseWordMarkov{
 
     for (int i = 0; i < myWords.length - myOrder + 1; i += 1) {
       WordGram current = new WordGram(myWords, i, myOrder);
-      ArrayList<String> listy = new ArrayList<String>();
 
       if (!myMap.containsKey(current)) {
-        myMap.put(current, listy);
+        myMap.put(current, new ArrayList<String>());
       }
       if (i + myOrder < myWords.length) {
-        listy.add(myWords[i + myOrder]);
+        myMap.get(current).add(myWords[i + myOrder]);
       }
       else {
-        listy.add(PSEUDO_EOS);
+        myMap.get(current).add(PSEUDO_EOS);
       }
     }
   }
