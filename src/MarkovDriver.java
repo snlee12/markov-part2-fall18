@@ -9,9 +9,9 @@ import java.util.*;
  */
 
 public class MarkovDriver {
-	
+
 	private static final int TEXT_SIZE = 200;
-	
+
 	public static void markovGenerate(MarkovInterface<?> markov, String text) {
 		double start = System.nanoTime();
 		for(int k=1; k <= 5; k++) {
@@ -25,16 +25,16 @@ public class MarkovDriver {
 		double end = System.nanoTime();
 		System.out.printf("total time = %2.3f\n", (end-start)/1e9);
 	}
-	
+
 	public static void main(String[] args) {
-			
-		String filename = "data/trump-sou17.txt";
+
+		String filename = "../data/trump-sou17.txt";
 		//String filename = "data/bush-sou07.txt";
 
 		if (args.length > 0) {
 			filename = args[1];
 		}
-		
+
 		File f = new File(filename);
 		String text = TextSource.textFromFile(f);
 		MarkovInterface<String> standard = new BaseMarkov();

@@ -3,12 +3,12 @@ import java.util.*;
 /**
  * Base class for Markov text generation. This version
  * rescans the training text for each randomly-generated
- * character. This makes generating N characters an O(T*N) 
+ * character. This makes generating N characters an O(T*N)
  * task where T is the size of the training text
- * 
+ *
  * This class is designed to be extended with state
  * protected rather than private
- * 
+ *
  * @author ola
  *
  */
@@ -19,7 +19,7 @@ public class BaseMarkov  implements MarkovInterface<String> {
 	protected int myOrder;
 	protected static String PSEUDO_EOS = "";
 	protected static long RANDOM_SEED = 1234;
-	
+
 	/**
 	 * Construct a BaseMarkov object with
 	 * the specified order
@@ -29,17 +29,17 @@ public class BaseMarkov  implements MarkovInterface<String> {
 		myOrder = order;
 		myRandom = new Random(RANDOM_SEED);
 	}
-	
+
 	/**
 	 * Default constructor has order 3
 	 */
 	public BaseMarkov() {
 		this(3);
 	}
-	
+
 	/**
 	 * Change the order of this markov generator
-	 * @param is the new order 
+	 * @param is the new order
 	 * @return the previous order
 	 */
 	public int setOrder(int order) {
@@ -47,7 +47,7 @@ public class BaseMarkov  implements MarkovInterface<String> {
 		myOrder = order;
 		return old;
 	}
-	
+
 	@Override
 	public String getRandomText(int length) {
 		StringBuilder sb = new StringBuilder();
@@ -55,14 +55,14 @@ public class BaseMarkov  implements MarkovInterface<String> {
 
 		String current = myText.substring(index, index + myOrder);
 		sb.append(current);
-		
+
 		for(int k=0; k < length-myOrder; k += 1){
 			ArrayList<String> follows = getFollows(current);
 			if (follows.size() == 0){
 				break;
 			}
 			index = myRandom.nextInt(follows.size());
-			
+
 			String nextItem = follows.get(index);
 			if (nextItem.equals(PSEUDO_EOS)) {
 				//System.out.println("PSEUDO");
@@ -71,16 +71,16 @@ public class BaseMarkov  implements MarkovInterface<String> {
 			sb.append(nextItem);
 			current = current.substring(1)+ nextItem;
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	@Override
 	public ArrayList<String> getFollows(String key){
 		ArrayList<String> follows = new ArrayList<String>();
-		
+
 		int pos = 0;  // location where search for key in text starts
-		
+
 		while (pos < myText.length()){
 			int start = myText.indexOf(key,pos);
 			if (start == -1){
@@ -107,9 +107,9 @@ public class BaseMarkov  implements MarkovInterface<String> {
 
 	public void setSeed(long seed) {
 		RANDOM_SEED = seed;
-		myRandom = new Random(RANDOM_SEED);	
+		myRandom = new Random(RANDOM_SEED);
 	}
-	
+
 	@Override
 	public void resetRandom() {
 		myRandom.setSeed(RANDOM_SEED);
@@ -119,5 +119,5 @@ public class BaseMarkov  implements MarkovInterface<String> {
 	public void setTraining(String text) {
 		myText = text;
 	}
-	
+
 }
