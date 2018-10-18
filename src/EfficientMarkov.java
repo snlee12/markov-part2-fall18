@@ -17,6 +17,7 @@ public class EfficientMarkov extends BaseMarkov {
   @Override
   public void setTraining(String text) {
     myMap.clear();
+    myText = text;
 
     for (int i = 0; i < myText.length() - myOrder + 1; i += 1) {
       String tempText = myText.substring(i, i + myOrder);
@@ -25,7 +26,13 @@ public class EfficientMarkov extends BaseMarkov {
       if (!myMap.containsKey(tempText)) {
         myMap.put(tempText, listy);
       }
-      listy.add(myText.substring(i + myOrder, i + myOrder + 1));
+      if (i + myOrder < myText.length()) {
+        listy.add(Character.toString(myText.charAt(i + myOrder)));
+      }
+      else {
+        listy.add(PSEUDO_EOS);
+      }
+
     }
   }
 
